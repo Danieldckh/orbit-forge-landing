@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Orbit Forge</title>
+    <meta name="description" content="A bold landing page with env driven links for Coolify and GitHub.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <style>
+      :root {
+        --bg-0: #0c1218;
+        --bg-1: #121c27;
+        --bg-2: #1a2838;
+        --ink: #f5f7fb;
+        --muted: #b7c3d6;
+        --accent: #ff7a3d;
+        --accent-2: #34d5c2;
+        --accent-3: #f3c969;
+        --glass: rgba(255, 255, 255, 0.08);
+        --stroke: rgba(255, 255, 255, 0.12);
+        --shadow: 0 20px 60px rgba(8, 12, 18, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Space Grotesk", "DM Sans", system-ui, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1200px 800px at 15% -10%, rgba(52, 213, 194, 0.22), transparent 65%),
+          radial-gradient(1000px 700px at 85% 20%, rgba(255, 122, 61, 0.22), transparent 60%),
+          linear-gradient(140deg, var(--bg-0), var(--bg-1) 45%, var(--bg-2));
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 120px),
+          repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 120px);
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        position: relative;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 32px 24px 64px;
+        z-index: 1;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0 24px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .logo-mark {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        display: grid;
+        place-items: center;
+        font-size: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .pill {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: rgba(13, 19, 27, 0.75);
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 48px;
+        align-items: center;
+      }
+
+      .hero-text h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2.6rem, 3vw + 1.4rem, 4rem);
+        line-height: 1.05;
+      }
+
+      .hero-text p {
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 1.05rem;
+        max-width: 520px;
+      }
+
+      .cta {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: 1px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn.primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-3));
+        color: #141414;
+        box-shadow: 0 18px 40px rgba(255, 122, 61, 0.25);
+      }
+
+      .btn.ghost {
+        border-color: var(--stroke);
+        background: rgba(16, 26, 37, 0.6);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .meta {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .meta span {
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .hero-panel {
+        position: relative;
+        padding: 28px;
+        border-radius: 24px;
+        background: rgba(16, 26, 37, 0.7);
+        border: 1px solid var(--stroke);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(52, 213, 194, 0.25), transparent 60%);
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .panel-title {
+        font-weight: 600;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .kv {
+        display: grid;
+        gap: 12px;
+      }
+
+      .kv-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 14px;
+        background: rgba(12, 18, 26, 0.65);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.9rem;
+      }
+
+      .kv-row span:last-child {
+        font-weight: 600;
+        color: var(--accent-3);
+        text-align: right;
+        max-width: 55%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+      }
+
+      .badge {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(52, 213, 194, 0.14);
+        border: 1px solid rgba(52, 213, 194, 0.4);
+        font-size: 0.75rem;
+        color: var(--accent-2);
+      }
+
+      .section {
+        margin-top: 64px;
+      }
+
+      .section h2 {
+        font-size: clamp(1.6rem, 2vw + 1rem, 2.4rem);
+        margin-bottom: 20px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(16, 26, 37, 0.7);
+        border: 1px solid var(--stroke);
+        min-height: 160px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 1.05rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .footer {
+        margin-top: 64px;
+        padding-top: 24px;
+        border-top: 1px solid var(--stroke);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s ease forwards;
+        animation-delay: var(--delay, 0s);
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+
+        .hero-panel {
+          order: -1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+
+        .btn {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="nav reveal" style="--delay: 0.05s">
+        <div class="logo">
+          <div class="logo-mark">OF</div>
+          Orbit Forge
+        </div>
+        <nav class="nav-links">
+          <a href="#stack">Stack</a>
+          <a href="#flow">Flow</a>
+          <a href="#launch">Launch</a>
+        </nav>
+        <div class="pill">Agent: <span data-agent-name>Codex</span></div>
+      </header>
+
+      <main class="hero">
+        <section class="hero-text reveal" style="--delay: 0.12s">
+          <h1>Launch a landing page in one orbit.</h1>
+          <p>
+            Orbit Forge is a compact, focused landing page that reads agent and env
+            variables, then routes your visitors to Coolify and GitHub with no extra clicks.
+          </p>
+          <div class="cta">
+            <a class="btn primary" data-coolify-link href="https://coolify.io">Deploy on Coolify</a>
+            <a class="btn ghost" data-github-link href="https://github.com">View on GitHub</a>
+          </div>
+          <div class="meta">
+            <div>Env status: <span data-env-status>Fallback</span></div>
+            <div>Build agent: <span data-agent-name>Codex</span></div>
+          </div>
+        </section>
+
+        <aside class="hero-panel reveal" style="--delay: 0.18s">
+          <div class="panel-title">Live config feed</div>
+          <div class="kv">
+            <div class="kv-row">
+              <span>COOLIFY_URL</span>
+              <span data-env-coolify>https://coolify.io</span>
+            </div>
+            <div class="kv-row">
+              <span>GITHUB_URL</span>
+              <span data-env-github>https://github.com</span>
+            </div>
+            <div class="kv-row">
+              <span>AGENT_NAME</span>
+              <span data-agent-name>Codex</span>
+            </div>
+          </div>
+          <div class="badge-row">
+            <span class="badge">Env driven links</span>
+            <span class="badge">Coolify ready</span>
+            <span class="badge">GitHub ready</span>
+          </div>
+        </aside>
+      </main>
+
+      <section id="stack" class="section reveal" style="--delay: 0.2s">
+        <h2>Everything you need to host fast.</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Clean handoff</h3>
+            <p>Drop in env vars from your hosting agent and the calls-to-action update instantly.</p>
+          </article>
+          <article class="card">
+            <h3>Focused hierarchy</h3>
+            <p>One hero, one panel, three outcomes. Visitors know exactly where to go next.</p>
+          </article>
+          <article class="card">
+            <h3>Deploy friendly</h3>
+            <p>Designed to look crisp on Coolify, GitHub Pages, or any static host.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="flow" class="section reveal" style="--delay: 0.26s">
+        <h2>How it works</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>1. Set env</h3>
+            <p>Expose `COOLIFY_URL`, `GITHUB_URL`, and `AGENT_NAME` from your host.</p>
+          </article>
+          <article class="card">
+            <h3>2. Load once</h3>
+            <p>The page reads a single `window.ENV` object and hydrates everything.</p>
+          </article>
+          <article class="card">
+            <h3>3. Share</h3>
+            <p>Send the live URL and let the agent-driven links do the routing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="launch" class="section reveal" style="--delay: 0.32s">
+        <h2>Ready to launch?</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Coolify</h3>
+            <p>Point the primary button at your Coolify app with a single env value.</p>
+          </article>
+          <article class="card">
+            <h3>GitHub</h3>
+            <p>Drive traffic to your repo, release notes, or docs in the secondary CTA.</p>
+          </article>
+          <article class="card">
+            <h3>Agent control</h3>
+            <p>Attribute the deploy to your build agent for clarity and trust.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer reveal" style="--delay: 0.38s">
+        <span>Orbit Forge landing page. Plug in your host env and publish.</span>
+        <span>Env keys: COOLIFY_URL, GITHUB_URL, AGENT_NAME</span>
+      </footer>
+    </div>
+
+    <script>
+      const env = window.ENV || {};
+      const coolifyUrl = env.COOLIFY_URL || env.COOLIFY_HOST || "https://coolify.io";
+      const githubUrl = env.GITHUB_URL || env.GITHUB_REPO || "https://github.com";
+      const agentName = env.AGENT_NAME || "Codex";
+      const envReady = env.COOLIFY_URL || env.GITHUB_URL || env.AGENT_NAME;
+
+      document.querySelectorAll("[data-coolify-link]").forEach((el) => {
+        el.href = coolifyUrl;
+      });
+      document.querySelectorAll("[data-github-link]").forEach((el) => {
+        el.href = githubUrl;
+      });
+      document.querySelectorAll("[data-env-coolify]").forEach((el) => {
+        el.textContent = coolifyUrl;
+      });
+      document.querySelectorAll("[data-env-github]").forEach((el) => {
+        el.textContent = githubUrl;
+      });
+      document.querySelectorAll("[data-agent-name]").forEach((el) => {
+        el.textContent = agentName;
+      });
+      document.querySelectorAll("[data-env-status]").forEach((el) => {
+        el.textContent = envReady ? "Live" : "Fallback";
+      });
+    </script>
+  </body>
+</html>
